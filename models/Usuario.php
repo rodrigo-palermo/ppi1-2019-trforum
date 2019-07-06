@@ -3,6 +3,7 @@
 
 class Usuario
 {
+    protected $id;
     protected $login;
     protected $senha;
     protected $nome;
@@ -11,6 +12,10 @@ class Usuario
     protected $assinatura;
     protected $perfil;
 
+    public function getId() {
+        return $this->id;
+    }
+    
     public function getLogin()
     {
         return $this->login;
@@ -79,6 +84,10 @@ class Usuario
     public function setPerfil($perfil)
     {
         $this->perfil = $perfil;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
     }
 
 

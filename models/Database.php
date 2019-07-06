@@ -7,12 +7,16 @@ class Database
     private $username;
     private $password;
 
-    public static function getBanco() {
-        $dsn = 'mysql:host=localhost;dbname=forum';
+    public static function getDB() {
+        $driver = 'mysql';
+        $host = 'localhost';
         $username = 'root';
         $password = '';
+        $database = 'forum';
+        $charset = 'utf8';
+        $dsn = $driver.':host='.$host.';dbname='.$database.';charset='.$charset;
         try {
-            $conn = new PDO($dsn, $username, $password);
+            $conn = new PDO($dsn, $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             //print "Conectado com sucesso";
             return $conn;

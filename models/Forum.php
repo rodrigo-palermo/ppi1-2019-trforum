@@ -3,9 +3,14 @@
 
 class Forum
 {
+    protected $id;
     protected $nome;
     protected $descricao;
 
+    public function getId() {
+        return $this->id;
+    }
+    
     public function getNome()
     {
         return $this->nome;
@@ -25,4 +30,9 @@ class Forum
     {
         $this->descricao = $descricao;
     }
+    
+    public function setId($id) {
+        $this->id = $id;
+    }
+    
 }
