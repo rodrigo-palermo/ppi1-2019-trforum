@@ -24,9 +24,11 @@ USE `forum`;
 
 CREATE TABLE IF NOT EXISTS `secao` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `descricao` varchar(2000) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `ordem` int(11) NOT NULL,
+  `nome` varchar(100) COLLATE utf8_bin NOT NULL,
+  `descricao` varchar(2000) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_ordem` (`ordem`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 
 -- --------------------------------------------------------

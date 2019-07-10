@@ -6,11 +6,15 @@ class Secao extends Database implements ORMInterface
     protected $id;
     protected $nome;
     protected $descricao;
+    protected $ordem; /* No banco deve ser UNIQUE. Cria nav-item para cada secao*/
 
     public function getId() {
         return $this->id;
     }
-    
+    public function setId($id) {
+        $this->id = $id;
+    }
+     
     public function getNome()
     {
         return $this->nome;
@@ -31,8 +35,12 @@ class Secao extends Database implements ORMInterface
         $this->descricao = $descricao;
     }
 
-    public function setId($id) {
-        $this->id = $id;
+    public function setOrdem($ordem) {
+        $this->ordem = $ordem;
+    }
+
+    public function getOrdem() {
+        return $this->ordem;
     }
 
     public static function getDB()
@@ -46,18 +54,21 @@ class Secao extends Database implements ORMInterface
         $sql = "INSERT INTO secao
 					(
 					 nome,
-					 descricao
+					 descricao,
+					 ordem
 					 )
 			    VALUES
 					(
 					 :nome,
-					 :descricao
+					 :descricao,
+					 :ordem
 					 )";
         $stmt = $db->prepare($sql);
         $stmt = $db->prepare($sql);
         $stmt->execute([
             ':nome' => $this->getNome(),
-            ':descricao' => $this->getDescricao()
+            ':descricao' => $this->getDescricao(),
+            ':ordem' => $this->getOrdem()
         ]);
         $this->id = $db->lastInsertId();
     }
@@ -67,14 +78,16 @@ class Secao extends Database implements ORMInterface
         $db = self::getDB();
         $sql = "UPDATE secao SET
 					 nome = :nome,
-					 descricao = :descricao
+					 descricao = :descricao,
+                     ordem = :ordem
 				WHERE id = :id";
         $stmt = $db->prepare($sql);
         $stmt = $db->prepare($sql);
         $stmt->execute([
             ':id' => $this->getId(),
             ':nome' => $this->getNome(),
-            ':descricao' => $this->getDescricao()
+            ':descricao' => $this->getDescricao(),
+            ':ordem' => $this->getOrdem()
         ]);
     }
 
@@ -104,6 +117,7 @@ class Secao extends Database implements ORMInterface
         $secao->setId($id);
         $secao->setNome( $data['nome'] );
         $secao->setDescricao( $data['descricao'] );
+        $secao->setOrdem( $data['ordem'] );
         return $secao;
     }
 
@@ -119,8 +133,28 @@ class Secao extends Database implements ORMInterface
             $secao->setId( $item['id'] );
             $secao->setNome( $item['nome'] );
             $secao->setDescricao( $item['descricao'] );
+            $secao->setOrdem( $item['ordem'] );
             $arrSecao[] = $secao;
         }
         return $arrSecao;
+    }
+
+    public static function findByOrder($ordem)
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM secao
+                WHERE ordem = :ordem";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':ordem' => $ordem
+        ]);
+        $data = $stmt->fetch();
+        $secao = new Secao();
+        $secao->setId($data['id']);
+        $secao->setNome( $data['nome'] );
+        $secao->setDescricao( $data['descricao'] );
+        $secao->setOrdem( $data['ordem'] );
+        return $secao;
     }
 }

@@ -26,13 +26,14 @@
             //if(!$_SESSION['valid']) {
             //    require_once __DIR__.'/controllers/login.php';
 
-            if (isset($_GET['acao'])) {
-                $controller = $_GET['acao'];
-            } else {
-                $controller = 'principal';
-            }
-
-            require_once __DIR__ . '/controllers/' . $controller . '.php';
+//            if (isset($_GET['acao'])) {
+//                $controller = $_GET['acao'];
+//            } else {
+//                $controller = 'principal';
+//            }
+//
+//            require_once __DIR__ . '/controllers/' . $controller . '.php';
+            require_once __DIR__ . '/controllers/principal.php';
 
 
             ?>
