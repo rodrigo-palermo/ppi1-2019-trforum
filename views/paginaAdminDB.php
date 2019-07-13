@@ -19,8 +19,10 @@
         $rowData .= "<td>".$secao->getOrdem()."</td>".PHP_EOL;
         $rowData .= "<td>".$secao->getNome()."</td>".PHP_EOL;
         $rowData .= "<td>".$secao->getDescricao()."</td>".PHP_EOL;
-        $rowData .= "<td><button type='button' class='btn btn-primary' onclick='acaoAdm(`secao`, `editar&id=".$secao->getId()."`)'>Editar</button>";
-        $rowData .=     "<br><br><button type='button' class='btn btn-danger' onclick='acaoAdm(`secao`, `excluir`)'>Excluir</button></td>".PHP_EOL;
+        $rowData .= "<td><div class='btn-group'>".PHP_EOL;
+        $rowData .= "<button type='button' class='btn btn-primary' onclick='acaoAdm(`secao`, `editar&id=".$secao->getId()."`)'>Editar</button>";
+        $rowData .= "<br><br><button type='button' class='btn btn-danger' onclick='acaoAdm(`secao`, `excluir`)'>Excluir</button>".PHP_EOL;
+        $rowData .= "</div></td>".PHP_EOL;
         $rowData .= "</tr>".PHP_EOL;
         print $rowData;
     } ?>

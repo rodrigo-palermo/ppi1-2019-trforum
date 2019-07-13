@@ -1,5 +1,5 @@
 <h2>Seção</h2>
-    <form id="formSecao" action='' <!--method='post'-->>
+    <form id="formSecao" action=''> <!--method='post'/-->
         <div class="form-group">
             <label for="id">Id</label>
             <input type="number" id="id" name="id" value="<?= isset($_GET['id'])?$object->getId():''; ?>" readonly>
@@ -16,36 +16,37 @@
             </textarea>
         </div>
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="<?= isset($_GET['id'])?'submitEditar':'submitCriar';?>" value="Salvar">
+            <input type="submit" class="btn btn-primary" value="Salvar">
+            <input type="text" name="<?= isset($_GET['id'])?'submitEditar':'submitCriar';?>" hidden>
         </div>
     </form>
 
 <script>
 
     $(document).ready(function () {
-        // conforme: https://blog.teamtreehouse.com/create-ajax-contact-form
-        // https://code.tutsplus.com/tutorials/submit-a-form-without-page-refresh-using-jquery--net-59
-        // Get the form
+        // Baseado em: https://blog.teamtreehouse.com/create-ajax-contact-form
+        //             https://code.tutsplus.com/tutorials/submit-a-form-without-page-refresh-using-jquery--net-59
+        // Variáveis para funções do formulário
         var loc = window.location.pathname;
         var dir = loc.substring(0, loc.lastIndexOf('/'));
         var form = $('#formSecao');
 
         form.submit(function ( event ) {
 
-            // Get the form data
+            // Armazena dados do formulário
             var formData = $(form).serialize();
 
             if( $('input#nome').val().length === 0 ) {
                 alert("Informe o nome");
                 event.preventDefault();
             } else {
-                // Submit the form using AJAX
+                // Envia o formulário via Ajax
                 $.ajax({
                     type: 'POST',
                     url: dir + '/controllers/admin.php',
                     data: formData,
                     success: function() {
-                        $('#formSecao').hide(); //só esconde o formulario, mas h2 permanece
+                        //$('#formSecao').hide(); //só esconde o formulario, mas h2 permanece
 
                         alert("Dados enviados com sucesso");
                         //location.reload();
@@ -58,7 +59,7 @@
             }
         });
 
-        //reload page
+        // Recarrega a página
         $('#btnCancel').click(function() {
             location.reload();
         });

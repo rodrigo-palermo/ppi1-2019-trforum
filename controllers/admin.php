@@ -3,14 +3,20 @@ require_once __DIR__ . '/../headLinkClasses.php';
 
 $arrSecao = Secao::findAll();
 
-//alterar local para database.php e no form criar botao para mudar sesao (talvez por ajax)
-if (isset($_POST['submitEditar'])){
+// TODO: alterar local para database.php ????????
+if (isset($_POST['submitCriar']) || isset($_POST['submitEditar'])) {
     $secao = new Secao();
-    $secao->setId($_POST['id']);
+
     $secao->setOrdem($_POST['ordem']);
     $secao->setNome($_POST['nome']);
     $secao->setDescricao($_POST['descricao']);
-    $secao->update();
+    if (isset($_POST['submitEditar'])) {
+        $secao->setId($_POST['id']);
+        $secao->update();
+    }
+    else {
+        $secao->insert();
+    }
 
 }
 
