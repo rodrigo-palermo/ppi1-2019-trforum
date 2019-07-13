@@ -39,7 +39,7 @@ print "</section>";
         }
     };
     function acaoAdm(table, crud){
-        $('section').load('controllers/database.php?table='+ table +'&crud=' + crud);
+        $('section').load('controllers/crud.php?table='+ table +'&crud=' + crud);
     };
     function voltarMesmaSecao(secao) {
         $('section').load('controllers/'+ secao +'.php');

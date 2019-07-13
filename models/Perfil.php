@@ -1,7 +1,7 @@
 <?php
 
 
-class Perfil
+class Perfil extends Database implements ORMInterface
 {
     protected $id;
     protected $nome;

@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../headLinkClasses.php';
 
 $arrSecao = Secao::findAll();
+$arrForum = Forum::findAll();
 
 // TODO: alterar local para database.php ????????
 if (isset($_POST['submitCriar']) || isset($_POST['submitEditar'])) {

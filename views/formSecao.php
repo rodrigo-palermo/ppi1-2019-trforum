@@ -11,9 +11,9 @@
             <input type="text" id="nome" name="nome" value="<?= isset($_GET['id'])?$object->getNome():''; ?>">
             <br/>
             <label for="descricao">Descrição</label>
-            <textarea class="for-control" rows="5" cols="100" id="descricao" name="descricao">
-                <?= isset($_GET['id'])? addslashes(str_replace(PHP_EOL, '', $object->getDescricao())):'';?>
-            </textarea>
+            <textarea class="for-control" rows="5" cols="100" id="descricao" name="descricao"><?=isset($_GET['id'])? $object->getDescricao():'';?></textarea>
+            <!--textarea deve ficar na mesma linha para evitar espaços na frente do texto ao criar/editar-->
+            <!--/* isset($_GET['id'])? addslashes(str_replace(PHP_EOL, '', $object->getDescricao())):'';*/-->
         </div>
         <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Salvar">

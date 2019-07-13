@@ -1,61 +1,64 @@
 <?php
 
 
-class Topico
+class Topico extends Database implements ORMInterface
 {
     protected $id;
+    protected $id_forum;
+    protected $id_usuario;
     protected $nome;
     protected $descricao;
-    protected $autor;
-    protected $dataHora;
+    protected $data_hora;
 
-    public function getId() {
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
         return $this->id;
     }
-   
+
+    /**
+     * @return mixed
+     */
+    public function getIdForum()
+    {
+        return $this->id_forum;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdUsuario()
+    {
+        return $this->id_usuario;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getNome()
     {
         return $this->nome;
     }
 
-    public function setNome($nome)
-    {
-        $this->nome = $nome;
-    }
-
+    /**
+     * @return mixed
+     */
     public function getDescricao()
     {
         return $this->descricao;
     }
 
-    public function setDescricao($descricao)
-    {
-        $this->descricao = $descricao;
-    }
-
-    public function getAutor()
-    {
-        return $this->autor;
-    }
-
-    public function setAutor($autor)
-    {
-        $this->autor = $autor;
-    }
-
+    /**
+     * @return mixed
+     */
     public function getDataHora()
     {
-        return $this->dataHora;
+        return $this->data_hora;
     }
 
-    public function setDataHora($dataHora)
-    {
-        $this->dataHora = $dataHora;
-    }
 
-    public function setId($id) {
-        $this->id = $id;
-    }
 
 
 }

@@ -1,60 +1,110 @@
 <?php
 
 
-class Post
+class Post extends Database implements ORMInterface
 {
     protected $id;
+    protected $id_topico;
+    protected $id_usuario;
     protected $nome;
     protected $descricao;
-    protected $autor;
-    protected $dataHora;
+    protected $data_hora;
 
-    public function getId() {
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
         return $this->id;
     }
-    
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdTopico()
+    {
+        return $this->id_topico;
+    }
+
+    /**
+     * @param mixed $id_topico
+     */
+    public function setIdTopico($id_topico)
+    {
+        $this->id_topico = $id_topico;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdUsuario()
+    {
+        return $this->id_usuario;
+    }
+
+    /**
+     * @param mixed $id_usuario
+     */
+    public function setIdUsuario($id_usuario)
+    {
+        $this->id_usuario = $id_usuario;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getNome()
     {
         return $this->nome;
     }
 
+    /**
+     * @param mixed $nome
+     */
     public function setNome($nome)
     {
         $this->nome = $nome;
     }
 
+    /**
+     * @return mixed
+     */
     public function getDescricao()
     {
         return $this->descricao;
     }
 
+    /**
+     * @param mixed $descricao
+     */
     public function setDescricao($descricao)
     {
         $this->descricao = $descricao;
     }
 
-    public function getAutor()
-    {
-        return $this->autor;
-    }
-
-    public function setAutor($autor)
-    {
-        $this->autor = $autor;
-    }
-
+    /**
+     * @return mixed
+     */
     public function getDataHora()
     {
-        return $this->dataHora;
+        return $this->data_hora;
     }
 
-    public function setDataHora($dataHora)
+    /**
+     * @param mixed $data_hora
+     */
+    public function setDataHora($data_hora)
     {
-        $this->dataHora = $dataHora;
+        $this->data_hora = $data_hora;
     }
 
-    public function setId($id) {
-        $this->id = $id;
-    }
 
 }

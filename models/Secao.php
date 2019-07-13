@@ -64,7 +64,6 @@ class Secao extends Database implements ORMInterface
 					 :ordem
 					 )";
         $stmt = $db->prepare($sql);
-        $stmt = $db->prepare($sql);
         $stmt->execute([
             ':nome' => $this->getNome(),
             ':descricao' => $this->getDescricao(),
@@ -81,7 +80,6 @@ class Secao extends Database implements ORMInterface
 					 descricao = :descricao,
                      ordem = :ordem
 				WHERE id = :id";
-        $stmt = $db->prepare($sql);
         $stmt = $db->prepare($sql);
         $stmt->execute([
             ':id' => $this->getId(),
@@ -113,12 +111,12 @@ class Secao extends Database implements ORMInterface
            ':id' => $id
         ]);
         $data = $stmt->fetch();
-        $secao = new Secao();
-        $secao->setId($id);
-        $secao->setNome( $data['nome'] );
-        $secao->setDescricao( $data['descricao'] );
-        $secao->setOrdem( $data['ordem'] );
-        return $secao;
+        $objeto = new Secao();
+        $objeto->setId($id);
+        $objeto->setNome( $data['nome'] );
+        $objeto->setDescricao( $data['descricao'] );
+        $objeto->setOrdem( $data['ordem'] );
+        return $objeto;
     }
 
     public static function findAll()
@@ -127,16 +125,16 @@ class Secao extends Database implements ORMInterface
         $sql = "SELECT *
                 FROM secao";
         $data = $db->query($sql);
-        $arrSecao = [];
+        $arrObjeto = [];
         foreach ($data as $item) {
-            $secao = new Secao();
-            $secao->setId( $item['id'] );
-            $secao->setNome( $item['nome'] );
-            $secao->setDescricao( $item['descricao'] );
-            $secao->setOrdem( $item['ordem'] );
-            $arrSecao[] = $secao;
+            $objeto = new Secao();
+            $objeto->setId( $item['id'] );
+            $objeto->setNome( $item['nome'] );
+            $objeto->setDescricao( $item['descricao'] );
+            $objeto->setOrdem( $item['ordem'] );
+            $arrObjeto[] = $objeto;
         }
-        return $arrSecao;
+        return $arrObjeto;
     }
 
     public static function findByOrder($ordem)
@@ -150,11 +148,11 @@ class Secao extends Database implements ORMInterface
             ':ordem' => $ordem
         ]);
         $data = $stmt->fetch();
-        $secao = new Secao();
-        $secao->setId($data['id']);
-        $secao->setNome( $data['nome'] );
-        $secao->setDescricao( $data['descricao'] );
-        $secao->setOrdem( $data['ordem'] );
-        return $secao;
+        $objeto = new Secao();
+        $objeto->setId($data['id']);
+        $objeto->setNome( $data['nome'] );
+        $objeto->setDescricao( $data['descricao'] );
+        $objeto->setOrdem( $data['ordem'] );
+        return $objeto;
     }
 }
