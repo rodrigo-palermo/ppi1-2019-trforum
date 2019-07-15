@@ -6,7 +6,7 @@ class Secao extends Database implements ORMInterface
     protected $id;
     protected $nome;
     protected $descricao;
-    protected $ordem; /* No banco deve ser UNIQUE. Cria nav-item para cada secao*/
+    protected $ordem; /* No banco deve ser UNIQUE, começando de 1. Cria nav-item para cada secao*/
 
     public function getId() {
         return $this->id;

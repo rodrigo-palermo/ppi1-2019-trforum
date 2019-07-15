@@ -106,5 +106,153 @@ class Post extends Database implements ORMInterface
         $this->data_hora = $data_hora;
     }
 
+    public static function getDB()
+    {
+        return Database::getDB();
+    }
+
+    public function insert()
+    {
+        $db = self::getDB();
+        $sql = "INSERT INTO post
+					(
+					 id_topico,
+					 id_usuario,
+					 nome,
+					 descricao,
+					 data_hora
+					 )
+			    VALUES
+					(
+					 :id_topico,
+					 :id_usuario,
+					 :nome,
+					 :descricao,
+					 :imagem,
+					 :data_hora
+					 )";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id_topico' => $this->getIdTopico(),
+            ':id_usuario' => $this->getIdUsuario(),
+            ':nome' => $this->getNome(),
+            ':descricao' => $this->getDescricao(),
+            ':data_hora' => $this->getDataHora()
+        ]);
+        $this->id = $db->lastInsertId();
+    }
+
+    public function update()
+    {
+        $db = self::getDB();
+        $sql = "UPDATE post SET
+					 id_topico = :id_topico,
+					 id_usuario = :id_usuario,
+					 nome = :nome,
+					 descricao = :descricao,
+					 data_hora = :data_hora
+				WHERE id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id' => $this->getId(),
+            ':id_topico' => $this->getIdTopico(),
+            ':id_usuario' => $this->getIdUsuario(),
+            ':nome' => $this->getNome(),
+            ':descricao' => $this->getDescricao(),
+            ':data_hora' => $this->getDataHora()
+        ]);
+    }
+
+    public function delete()
+    {
+        $db = self::getDB();
+        $sql = "DELETE FROM post 
+				WHERE id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id' => $this->getId()
+        ]);
+    }
+
+    public static function findById($id)
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM post
+                WHERE id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id' => $id
+        ]);
+        $data = $stmt->fetch();
+        $objeto = new Post();
+        $objeto->setId($id);
+        $objeto->setIdTopico( $data['id_topico'] );
+        $objeto->setIdUsuario( $data['id_usuario'] );
+        $objeto->setNome( $data['nome'] );
+        $objeto->setDescricao( $data['descricao'] );
+        $objeto->setDataHora( $data['data_hora'] );
+        return $objeto;
+    }
+
+    public static function findAll()
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM post";
+        $data = $db->query($sql);
+        $arrObjeto = [];
+        foreach ($data as $item) {
+            $objeto = new Post();
+            $objeto->setId( $item['id'] );
+            $objeto->setIdTopico( $item['id_topico'] );
+            $objeto->setIdUsuario( $item['id_usuario'] );
+            $objeto->setNome( $item['nome'] );
+            $objeto->setDescricao( $item['descricao'] );
+            $objeto->setDataHora( $item['data_hora'] );
+            $arrObjeto[] = $objeto;
+        }
+        return $arrObjeto;
+    }
+
+    public static function countByIdTopico($id_topico)
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM post
+                WHERE id_topico = :id_topico";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id_topico' => $id_topico
+        ]);
+        $data = $stmt->fetchAll();
+        return count($data);
+    }
+
+    public static function findAllByIdTopico($id_topico)
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM post
+                WHERE id_topico = :id_topico";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id_topico' => $id_topico
+        ]);
+        $data = $stmt->fetchAll();
+        $arrObjeto = [];
+        foreach ($data as $item) {
+            $objeto = new Post();
+            $objeto->setId( $item['id'] );
+            $objeto->setIdTopico( $item['id_topico'] );
+            $objeto->setIdUsuario( $item['id_usuario'] );
+            $objeto->setNome( $item['nome'] );
+            $objeto->setDescricao( $item['descricao'] );
+            $objeto->setDataHora( $item['data_hora'] );
+            $arrObjeto[] = $objeto;
+        }
+        return $arrObjeto;
+    }
+
 
 }

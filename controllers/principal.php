@@ -28,6 +28,7 @@ print "</section>";
 ?>
 
 <script>
+
     function mudaSecao(thisNav, thisSec) {
         $('.active')[0].className = 'nav-link';
         thisNav.className = 'nav-link active';
@@ -38,12 +39,14 @@ print "</section>";
             $('section').load('controllers/secao.php?secaoOrdem=' + thisSec);
         }
     };
-    function acaoAdm(table, crud){
-        $('section').load('controllers/crud.php?table='+ table +'&crud=' + crud);
-    };
+
     function voltarMesmaSecao(secao) {
         $('section').load('controllers/'+ secao +'.php');
-    }
+    };
+
+    function abreForum(id_secao, id_forum) {
+        $('section').load('controllers/forum.php?id_secao=' + id_secao + '&id_forum=' + id_forum);  //TODO: implementar
+    };
 </script>
 
 <?php

@@ -9,7 +9,7 @@ class Usuario extends Database implements ORMInterface
     protected $senha;
     protected $nome;
     protected $data_inscricao;
-    protected $foto;
+    protected $imagem;
     protected $assinatura;
 
     /**
@@ -111,17 +111,17 @@ class Usuario extends Database implements ORMInterface
     /**
      * @return mixed
      */
-    public function getFoto()
+    public function getImagem()
     {
-        return $this->foto;
+        return $this->imagem;
     }
 
     /**
-     * @param mixed $foto
+     * @param mixed $imagem
      */
-    public function setFoto($foto)
+    public function setImagem($imagem)
     {
-        $this->foto = $foto;
+        $this->imagem = $imagem;
     }
 
     /**
@@ -138,6 +138,107 @@ class Usuario extends Database implements ORMInterface
     public function setAssinatura($assinatura)
     {
         $this->assinatura = $assinatura;
+    }
+
+    public static function getDB()
+    {
+        return Database::getDB();
+    }
+
+    public function insert()
+    {
+        $db = self::getDB();
+        $sql = "INSERT INTO usuario
+					(
+					 id_perfil,
+					 nome,
+					 descricao,
+					 imagem
+					 )
+			    VALUES
+					(
+					 :id_perfil,
+					 :nome,
+					 :descricao,
+					 :imagem
+					 )";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id_perfil' => $this->getIdSecao(),
+            ':nome' => $this->getNome(),
+            ':descricao' => $this->getDescricao(),
+            ':imagem' => $this->getImagem()
+        ]);
+        $this->id = $db->lastInsertId();
+    }
+
+    public function update()
+    {
+        $db = self::getDB();
+        $sql = "UPDATE usuario SET
+					 id_perfil = :id_perfil,
+					 nome = :nome,
+					 descricao = :descricao,
+					 imagem = :imagem
+				WHERE id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id' => $this->getId(),
+            ':id_perfil' => $this->getIdSecao(),
+            ':nome' => $this->getNome(),
+            ':descricao' => $this->getDescricao(),
+            ':imagem' => $this->getImagem()
+        ]);
+    }
+
+    public function delete()
+    {
+        $db = self::getDB();
+        $sql = "DELETE FROM usuario 
+				WHERE id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id' => $this->getId()
+        ]);
+    }
+
+    public static function findById($id)
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM usuario
+                WHERE id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id' => $id
+        ]);
+        $data = $stmt->fetch();
+        $objeto = new Usuario();
+        $objeto->setId($id);
+        $objeto->setIdSecao( $data['id_perfil'] );
+        $objeto->setNome( $data['nome'] );
+        $objeto->setDescricao( $data['descricao'] );
+        $objeto->setImagem( $data['imagem'] );
+        return $objeto;
+    }
+
+    public static function findAll()
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM usuario";
+        $data = $db->query($sql);
+        $arrObjeto = [];
+        foreach ($data as $item) {
+            $objeto = new Usuario();
+            $objeto->setId( $item['id'] );
+            $objeto->setIdSecao( $item['id_perfil'] );
+            $objeto->setNome( $item['nome'] );
+            $objeto->setDescricao( $item['descricao'] );
+            $objeto->setImagem( $item['imagem'] );
+            $arrObjeto[] = $objeto;
+        }
+        return $arrObjeto;
     }
 
 

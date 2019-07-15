@@ -7,6 +7,7 @@ class Forum extends Database implements ORMInterface
     protected $id_secao;
     protected $nome;
     protected $descricao;
+    protected $imagem;
 
     /**
      * @return mixed
@@ -72,6 +73,22 @@ class Forum extends Database implements ORMInterface
         $this->descricao = $descricao;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getImagem()
+    {
+        return $this->imagem;
+    }
+
+    /**
+     * @param mixed $imagem
+     */
+    public function setImagem($imagem)
+    {
+        $this->imagem = $imagem;
+    }
+
     public static function getDB()
     {
         return Database::getDB();
@@ -84,19 +101,22 @@ class Forum extends Database implements ORMInterface
 					(
 					 id_secao,
 					 nome,
-					 descricao
+					 descricao,
+					 imagem
 					 )
 			    VALUES
 					(
 					 :id_secao,
 					 :nome,
-					 :descricao
+					 :descricao,
+					 :imagem
 					 )";
         $stmt = $db->prepare($sql);
         $stmt->execute([
             ':id_secao' => $this->getIdSecao(),
             ':nome' => $this->getNome(),
-            ':descricao' => $this->getDescricao()
+            ':descricao' => $this->getDescricao(),
+            ':imagem' => $this->getImagem()
         ]);
         $this->id = $db->lastInsertId();
     }
@@ -107,14 +127,16 @@ class Forum extends Database implements ORMInterface
         $sql = "UPDATE forum SET
 					 id_secao = :id_secao,
 					 nome = :nome,
-					 descricao = :descricao
+					 descricao = :descricao,
+					 imagem = :imagem
 				WHERE id = :id";
         $stmt = $db->prepare($sql);
         $stmt->execute([
             ':id' => $this->getId(),
             ':id_secao' => $this->getIdSecao(),
             ':nome' => $this->getNome(),
-            ':descricao' => $this->getDescricao()
+            ':descricao' => $this->getDescricao(),
+            ':imagem' => $this->getImagem()
         ]);
     }
 
@@ -145,6 +167,7 @@ class Forum extends Database implements ORMInterface
         $objeto->setIdSecao( $data['id_secao'] );
         $objeto->setNome( $data['nome'] );
         $objeto->setDescricao( $data['descricao'] );
+        $objeto->setImagem( $data['imagem'] );
         return $objeto;
     }
 
@@ -158,9 +181,48 @@ class Forum extends Database implements ORMInterface
         foreach ($data as $item) {
             $objeto = new Forum();
             $objeto->setId( $item['id'] );
-            $objeto->setIdSecao( $data['id_secao'] );
+            $objeto->setIdSecao( $item['id_secao'] );
             $objeto->setNome( $item['nome'] );
             $objeto->setDescricao( $item['descricao'] );
+            $objeto->setImagem( $item['imagem'] );
+            $arrObjeto[] = $objeto;
+        }
+        return $arrObjeto;
+    }
+
+    public static function countByIdSecao($id_secao)
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM forum
+                WHERE id_secao = :id_secao";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id_secao' => $id_secao
+        ]);
+        $data = $stmt->fetchAll();
+        return count($data);
+    }
+
+    public static function findAllByIdSecao($id_secao)
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM forum
+                WHERE id_secao = :id_secao";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id_secao' => $id_secao
+        ]);
+        $data = $stmt->fetchAll();
+        $arrObjeto = [];
+        foreach ($data as $item) {
+            $objeto = new Forum();
+            $objeto->setId( $item['id'] );
+            $objeto->setIdSecao( $item['id_secao'] );
+            $objeto->setNome( $item['nome'] );
+            $objeto->setDescricao( $item['descricao'] );
+            $objeto->setImagem( $item['imagem'] );
             $arrObjeto[] = $objeto;
         }
         return $arrObjeto;

@@ -3,7 +3,7 @@
 $contagemSecao= count(Secao::findAll());
 $arrSecao = [];
 
-for ($ordem = 0; $ordem < $contagemSecao; $ordem++) {
+for ($ordem = 1; $ordem <= $contagemSecao; $ordem++) {
     $arrSecao[$ordem] = Secao::findByOrder($ordem);
 }
 
