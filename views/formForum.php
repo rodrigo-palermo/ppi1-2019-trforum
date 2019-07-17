@@ -44,7 +44,7 @@
         <input type="text" class="form-control" id="imagem" name="imagem" value="<?= isset($_GET['id'])?$object->getImagem():''; ?>">
     </div>
     <div class="form-group">
-        <!-- Variáveis GET para identificar no a Classe e o método CRUD -->
+        <!-- Variáveis POST para identificar a Classe e o método CRUD -->
         <input type="text" name="classe" value="forum" hidden>
         <input type="text" name="<?= isset($_GET['id'])?'submitEditar':'submitCriar';?>" hidden>
 

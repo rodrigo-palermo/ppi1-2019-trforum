@@ -40,16 +40,69 @@ print "</section>";
         }
     };
 
+    function abreLogin(thisNav, thisSec) {
+        $('.active')[0].className = 'nav-link';
+        $('#auxLogin')[0].className = 'nav-link active';
+        $('section').load('controllers/' + thisSec + '.php');
+
+    };
+
+    function logout() {
+        // $('#nav-btn-logout').hide();
+
+        $(document).ready(function () {
+
+            $('section').load('controllers/logout.php');
+            alert("Sessão encerrada");
+            location.reload();
+
+        });
+    };
+
+    function atualizaPrincipal() {
+        //location.assign("index.php");
+        location.reload();
+
+    };
+
     function voltarMesmaSecao(secao) {
         $('section').load('controllers/'+ secao +'.php');
     };
 
-    function abreForum(id_secao, id_forum) {
-        $('section').load('controllers/forum.php?id_secao=' + id_secao + '&id_forum=' + id_forum);  //TODO: implementar
+    function abreSecao(secaoOrdem) {
+        $('section').load('controllers/secao.php?secaoOrdem=' + secaoOrdem);
     };
+
+    function abreForum(id_secao, id_forum) {
+        $('section').load('controllers/forum.php?id_secao=' + id_secao + '&id_forum=' + id_forum);
+    };
+
+    function abreTopico(id_forum, id_topico) {
+        $('section').load('controllers/topico.php?id_forum=' + id_forum + '&id_topico=' + id_topico);
+    };
+
+    function abrePost(id_topico, id_post) {
+        $('section').load('controllers/post.php?id_topico=' + id_topico + '&id_post=' + id_post);
+    };
+
+    function acaoPublicar(table, crud){
+        $('section').load('controllers/admin_create_update.php?table='+ table +'&crud=' + crud);
+    };
+
+    function abreUsuarioRegistrar(){
+        $('section').load('controllers/login.php?acao=registrar');
+    };
+
+
+
+
 </script>
 
 <?php
 //DEBUG
-//print var_dump($arrSecao);
-?>
+print '<hr><br><p>DEBUG</p>';
+if (isset($_SESSION['autenticado'])) {
+    print '<pre>'.var_export($_SESSION, true).'</pre>';
+}
+
+

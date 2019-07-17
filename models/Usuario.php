@@ -151,23 +151,32 @@ class Usuario extends Database implements ORMInterface
         $sql = "INSERT INTO usuario
 					(
 					 id_perfil,
+					 login,
+					 senha,
 					 nome,
-					 descricao,
-					 imagem
+					 data_inscricao,
+					 imagem,
+					 assinatura
 					 )
 			    VALUES
 					(
 					 :id_perfil,
+					 :login,
+					 :senha,
 					 :nome,
-					 :descricao,
-					 :imagem
+					 :data_inscricao,
+					 :imagem,
+					 :assinatura
 					 )";
         $stmt = $db->prepare($sql);
         $stmt->execute([
-            ':id_perfil' => $this->getIdSecao(),
+            ':id_perfil' => $this->getIdPerfil(),
+            ':login' => $this->getLogin(),
+            ':senha' => $this->getSenha(),
             ':nome' => $this->getNome(),
-            ':descricao' => $this->getDescricao(),
-            ':imagem' => $this->getImagem()
+            ':data_inscricao' => $this->getDataInscricao(),
+            ':imagem' => $this->getImagem(),
+            ':assinatura' => $this->getAssinatura()
         ]);
         $this->id = $db->lastInsertId();
     }
@@ -177,17 +186,23 @@ class Usuario extends Database implements ORMInterface
         $db = self::getDB();
         $sql = "UPDATE usuario SET
 					 id_perfil = :id_perfil,
+					 login = :login,
+					 senha = :senha,
 					 nome = :nome,
-					 descricao = :descricao,
-					 imagem = :imagem
+					 data_inscricao = :data_inscricao,
+					 imagem = :imagem,
+					 assinatura = :assinatura
 				WHERE id = :id";
         $stmt = $db->prepare($sql);
         $stmt->execute([
             ':id' => $this->getId(),
-            ':id_perfil' => $this->getIdSecao(),
+            ':id_perfil' => $this->getIdPerfil(),
+            ':login' => $this->getLogin(),
+            ':senha' => $this->getSenha(),
             ':nome' => $this->getNome(),
-            ':descricao' => $this->getDescricao(),
-            ':imagem' => $this->getImagem()
+            ':data_inscricao' => $this->getDataInscricao(),
+            ':imagem' => $this->getImagem(),
+            ':assinatura' => $this->getAssinatura()
         ]);
     }
 
@@ -214,11 +229,14 @@ class Usuario extends Database implements ORMInterface
         ]);
         $data = $stmt->fetch();
         $objeto = new Usuario();
-        $objeto->setId($id);
-        $objeto->setIdSecao( $data['id_perfil'] );
+        $objeto->setId($id);  // parametro da busca
+        $objeto->setIdPerfil( $data['id_perfil'] );
+        $objeto->setLogin( $data['login'] );
+        $objeto->setSenha( $data['senha'] );
         $objeto->setNome( $data['nome'] );
-        $objeto->setDescricao( $data['descricao'] );
+        $objeto->setDataInscricao( $data['data_inscricao'] );
         $objeto->setImagem( $data['imagem'] );
+        $objeto->setAssinatura( $data['assinatura'] );
         return $objeto;
     }
 
@@ -232,13 +250,39 @@ class Usuario extends Database implements ORMInterface
         foreach ($data as $item) {
             $objeto = new Usuario();
             $objeto->setId( $item['id'] );
-            $objeto->setIdSecao( $item['id_perfil'] );
+            $objeto->setIdPerfil( $item['id_perfil'] );
+            $objeto->setLogin( $item['login'] );
+            $objeto->setSenha( $item['senha'] );
             $objeto->setNome( $item['nome'] );
-            $objeto->setDescricao( $item['descricao'] );
+            $objeto->setDataInscricao( $item['data_inscricao'] );
             $objeto->setImagem( $item['imagem'] );
+            $objeto->setAssinatura( $item['assinatura'] );
             $arrObjeto[] = $objeto;
         }
         return $arrObjeto;
+    }
+
+    public static function findByLogin($login)
+    {
+        $db = self::getDB();
+        $sql = "SELECT *
+                FROM usuario
+                WHERE login = :login";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':login' => $login
+        ]);
+        $data = $stmt->fetch();
+        $objeto = new Usuario();
+        $objeto->setId($data['id']);
+        $objeto->setIdPerfil( $data['id_perfil'] );
+        $objeto->setLogin( $login );  //parametro da busca
+        $objeto->setSenha( $data['senha'] );
+        $objeto->setNome( $data['nome'] );
+        $objeto->setDataInscricao( $data['data_inscricao'] );
+        $objeto->setImagem( $data['imagem'] );
+        $objeto->setAssinatura( $data['assinatura'] );
+        return $objeto;
     }
 
 

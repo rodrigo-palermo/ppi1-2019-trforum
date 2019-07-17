@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['autenticado'])) {
+    $_SESSION['autenticado'] = false;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,11 +23,6 @@
 <main>
     <div class="container">
         <?php
-        session_start();
-
-        if(!isset($_SESSION['valid'])) {
-            $_SESSION['valid'] = false;
-        }
 
         //TODO: habilitar partes autenticadas
         //if(!$_SESSION['valid']) {

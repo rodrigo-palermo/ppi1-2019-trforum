@@ -1,15 +1,19 @@
 <?php
+session_start();
 require_once __DIR__ . '/../headLinkClasses.php';
 
 if(isset($_GET['secaoOrdem'])) {
 
     $secao = Secao::findByOrder($_GET['secaoOrdem']);
 
+    $_SESSION['id_secao'] = $secao->getId();
+    $_SESSION['secaoOrdem'] = $_GET['secaoOrdem'];  //para botões VOLTAR
+
     $secaoNome = ucfirst($secao->getNome());
     $secaoDescricao = addslashes(str_replace(PHP_EOL, '', $secao->getDescricao()));
 
     print "<h2>" . $secaoNome . "</h2>";
-    print $secaoDescricao;
+    print "<p>" . $secaoDescricao . "</p>";
 
     print "<h4>Fóruns</h4>";
 

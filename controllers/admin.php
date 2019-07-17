@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../headLinkClasses.php';
 
+// Listas para uso do ADMIN
 $arrSecao = Secao::findAll();
 $arrForum = Forum::findAll();
 $arrPerfil = Perfil::findAll();
@@ -45,6 +46,50 @@ if (isset($_POST['classe'])) {
             }
             break;
 
+        case 'topico':
+            $date = new DateTime('now');
+            //$data_hora_criacao = date("Y-m-d ", strtotime(str_replace('/','-', $_POST['data_hora_criacao'])));
+            $data_hora_criacao = $date->format('Y-m-d H:i:s');
+            $topico = new Topico();
+            $topico->setIdForum($_POST['id_forum']);
+            $topico->setIdUsuario($_POST['id_usuario']);
+            $topico->setNome($_POST['nome']);
+            $topico->setDescricao($_POST['descricao']);
+            $topico->setDataHora($data_hora_criacao);
+            if (isset($_POST['submitEditar']) || isset($_POST['excluir'])) {
+                $topico->setId($_POST['id']);
+                if (isset($_POST['submitEditar'])) {
+                    $topico->update();
+                } else { //$_POST['excluir'])
+                    $topico->delete();
+                }
+            } else {
+                $topico->insert();
+            }
+            break;
+
+        case 'post':
+            $date = new DateTime('now');
+            //$data_hora_criacao = date("Y-m-d ", strtotime(str_replace('/','-', $_POST['data_hora_criacao'])));
+            $data_hora_criacao = $date->format('Y-m-d H:i:s');
+            $post = new Post();
+            $post->setIdTopico($_POST['id_topico']);
+            $post->setIdUsuario($_POST['id_usuario']);
+            $post->setNome($_POST['nome']);
+            $post->setDescricao(addslashes( $_POST['descricao']));
+            $post->setDataHora($data_hora_criacao);
+            if (isset($_POST['submitEditar']) || isset($_POST['excluir'])) {
+                $post->setId($_POST['id']);
+                if (isset($_POST['submitEditar'])) {
+                    $post->update();
+                } else { //$_POST['excluir'])
+                    $post->delete();
+                }
+            } else {
+                $post->insert();
+            }
+            break;
+
         case 'perfil':
             $perfil = new Perfil();
             $perfil->setNome($_POST['nome']);
@@ -61,12 +106,13 @@ if (isset($_POST['classe'])) {
             break;
 
         case 'usuario':
-            $usuario = new usuario();
+            $data_inscricao = date("Y-m-d", strtotime(str_replace('/','-', $_POST['data_inscricao'])));
+            $usuario = new Usuario();
             $usuario->setIdPerfil($_POST['id_perfil']);
             $usuario->setLogin($_POST['login']);
             $usuario->setSenha($_POST['senha']);
             $usuario->setNome($_POST['nome']);
-            $usuario->setDstaInscricao($_POST['data_inscricao']);    VER COMO DATA ESTA SENDo GRAVADA
+            $usuario->setDataInscricao($data_inscricao);
             $usuario->setImagem($_POST['imagem']);
             $usuario->setAssinatura($_POST['assinatura']);
             if (isset($_POST['submitEditar']) || isset($_POST['excluir'])) {

@@ -128,7 +128,6 @@ class Topico extends Database implements ORMInterface
 					 :id_usuario,
 					 :nome,
 					 :descricao,
-					 :imagem,
 					 :data_hora
 					 )";
         $stmt = $db->prepare($sql);
@@ -253,5 +252,28 @@ class Topico extends Database implements ORMInterface
         }
         return $arrObjeto;
     }
+    public static function findIdLastAddedByUser($id_usuario)
+    {
+        $db = self::getDB();
+        $sql = "SELECT id
+                FROM topico
+                WHERE id_usuario = :id_usuario
+                ORDER BY id DESC 
+                LIMIT 1";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':id_usuario' => $id_usuario
+        ]);
+        $data = $stmt->fetch();
+//        $objeto = new Topico();
+//        $objeto->setId($id);
+//        $objeto->setIdForum( $data['id_forum'] );
+//        $objeto->setIdUsuario( $data['id_usuario'] );
+//        $objeto->setNome( $data['nome'] );
+//        $objeto->setDescricao( $data['descricao'] );
+//        $objeto->setDataHora( $data['data_hora'] );
+        return $data['id']+1;
+    }
+
 
 }

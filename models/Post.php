@@ -128,7 +128,6 @@ class Post extends Database implements ORMInterface
 					 :id_usuario,
 					 :nome,
 					 :descricao,
-					 :imagem,
 					 :data_hora
 					 )";
         $stmt = $db->prepare($sql);

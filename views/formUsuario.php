@@ -2,7 +2,7 @@
 <form id="formUsuario" action=''> <!--method='post'/-->
     <div class="form-group">
         <label for="id">Id</label>
-        <input type="number" class="form-control" id="id" name="id" value="<?= isset($_GET['id'])?$object->getId():''; ?>" readonly>
+        <input type="number" class="form-control" id="id" name="id" value="<?= isset($_GET['id'])?$object->getId():''; ?>" readonly hidden>
     </div>
     <div class="form-group">
         <label for="id_perfil">Seção</label>
@@ -41,10 +41,10 @@
         <label for="nome">Nome</label>
         <input type="text" class="form-control" id="nome" name="nome" value="<?= isset($_GET['id'])?$object->getNome():''; ?>">
     </div>
-    <div class="form-group">
-        <label for="data_inscricao">Data de inscrição</label>
-        <input type="date" class="form-control" id="data_inscricao" name="data_inscricao" value="<?= isset($_GET['id'])?$object->getDataInscricao():''; ?>">
-    </div>
+<!--    <div class="form-group">-->
+<!--        <label for="data_inscricao">Data de inscrição</label>-->
+<!--        <input type="date" class="form-control" id="data_inscricao" name="data_inscricao" value="--><?//= isset($_GET['id'])?$object->getDataInscricao():''; ?><!--">-->
+<!--    </div>-->
     <div class="form-group">
         <label for="imagem">Imagem</label>
         <input type="text" class="form-control" id="imagem" name="imagem" value="<?= isset($_GET['id'])?$object->getImagem():''; ?>">
@@ -55,11 +55,11 @@
     </div>
 
     <div class="form-group">
-        <!-- Variáveis GET para identificar no a Classe e o método CRUD -->
+        <!-- Variáveis POST para identificar a Classe e o método CRUD -->
         <input type="text" name="classe" value="usuario" hidden>
         <input type="text" name="<?= isset($_GET['id'])?'submitEditar':'submitCriar';?>" hidden>
 
         <input type="submit" class="btn btn-outline-primary" value="Salvar">
-        <button type='button' class='btn btn-outline-danger more-vert-margin' onclick='voltarMesmaPerfil(`admin`)'>Voltar</button>
+        <button type='button' class='btn btn-outline-danger more-vert-margin' onclick='voltarMesmaSecao(`admin`)'>Voltar</button>
     </div>
 </form>
