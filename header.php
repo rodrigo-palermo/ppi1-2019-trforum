@@ -1,17 +1,21 @@
 <?php
-$contagemSecao= count(Secao::findAll());
+try{
+$contagemSecao= count(SecaoDAO::findAll());
 $arrSecao = [];
 
 for ($ordem = 1; $ordem <= $contagemSecao; $ordem++) {
-    $arrSecao[$ordem] = Secao::findByOrder($ordem);
+    $arrSecao[$ordem] = SecaoDAO::findByOrder($ordem);
+}
+}catch(PDOException $e){
+    echo 'Erro ao conectar ao banco: '.$e;
 }
 ?>
 
 
 <header class="sticky-top">
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark flex-row flex-md-row bd-navbar">
         <!-- Brand -->
-        <a class="navbar-brand" href="#">TOMB RAIDER FORUM</a>
+        <a class="navbar-brand mr-0 mr-md-2" href="#">TOMB RAIDER FORUM</a>
 
         <!-- Toggler/collapsibe Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -35,6 +39,8 @@ for ($ordem = 1; $ordem <= $contagemSecao; $ordem++) {
                     $navItem .= '</li>'.PHP_EOL;
                     print $navItem;
                 }?>
+            </ul>
+            <ul class="navbar-nav bd-navbar-nav ml-auto">
                 <!--//ADMIN-->
                 <?php
                 if (isset($_SESSION['autenticado']) && $_SESSION['autenticado'] == true && isset($_SESSION['perfil']) && $_SESSION['perfil'] == 1) { //(id_perfil ou cod_perfil) = 1 para ADMIN
@@ -47,8 +53,8 @@ for ($ordem = 1; $ordem <= $contagemSecao; $ordem++) {
                 <!--//LOGIN-->
                 <?php
                 if (!isset($_SESSION['autenticado']) || (isset($_SESSION['autenticado']) && $_SESSION['autenticado'] == false)) {
-                    $navItemLogin = '<li class="nav-item" style="float: right;">' . PHP_EOL;
-                    $navItemLogin .= '<button id="nav-btn-login" type="button" class="btn btn-info" href="#" onclick="abreLogin(this,`login`)">LOGIN</button>' . PHP_EOL;
+                    $navItemLogin = '<li class="nav-item ">' . PHP_EOL;
+                    $navItemLogin .= '<button id="nav-btn-login" type="button" class="btn btn-outline-info" href="#" onclick="abreLogin(this,`login`)">LOGIN</button>' . PHP_EOL;
                     $navItemLogin .= '</li>' . PHP_EOL;
                     print $navItemLogin;
                 }
@@ -56,10 +62,14 @@ for ($ordem = 1; $ordem <= $contagemSecao; $ordem++) {
                 <!--//LOGOUT-->
                 <?php
                 if (isset($_SESSION['autenticado']) && $_SESSION['autenticado'] == true) {
-                    $navItemLogout = '<li class="nav-item" style="float: right;">' . PHP_EOL;
-                    $navItemLogout .= '<button id="nav-btn-logout" type="button" class="btn btn-danger" href="#" onclick="logout()">SAIR</button>' . PHP_EOL;
+                    $navItemLogout = '<li class="nav-item">' . PHP_EOL;
+                    $navItemLogout .= '<button id="nav-btn-logout" type="button" class="btn btn-outline-danger" href="#" onclick="logout()">SAIR</button>' . PHP_EOL;
                     $navItemLogout .= '</li>' . PHP_EOL;
                     print $navItemLogout;
+                    ?>
+                    <li  class="nav-item"><img class="rounded-circle " src="img/<?= Usuario::findById($_SESSION['id_usuario'])->getImagem()?>" alt="Avatar do Usuario"  style="width:38px; margin:2px 10px"></li>;
+                <?php
+
                 }
                 ?>
             </ul>

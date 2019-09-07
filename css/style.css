@@ -25,6 +25,9 @@ header {
 	margin-bottom: 5px;
 }
 
+.btn-login-logout {
+	float: right;
+}
 
 footer {
 

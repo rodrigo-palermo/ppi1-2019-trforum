@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>TOMB RAIDER</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./trfavicon.ico">
+    <meta charset="utf-8">
+    <!-- Responsivo -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+    <script src="lib/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>-->
+    <script src="lib/popper.js/dist/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+    <script src="lib/js/bootstrap.min.js"></script>
+
+    <!-- Other css -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+<body>
+
+
+<header class="sticky-top navbar navbar-expand-sm bg-dark navbar-dark flex-row flex-md-row bd-navbar">
+
+    <!-- Brand -->
+    <a class="navbar-brand mr-0 mr-md-2" href="#">TOMB RAIDER FORUM</a>
+    <!--    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">-->
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav bd-navbar-nav">
+            <!--                <li class="nav-item">-->
+            <!--                    <a id='navHome' class="nav-link active" href="#" onclick="mudaSecao(this,'principal')">Home</a>-->
+            <!--                </li>-->
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="mudaSecao(this,1)">LarasX</a></li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="mudaSecao(this,2)">JogosX</a></li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="mudaSecao(this,3)">FilmesX</a></li>
+
+        </ul>
+
+        <!--//ADMIN-->
+        <!--//LOGIN-->
+        <div class="ml-auto">
+            <ul class="navbar-nav bd-navbar-nav">
+                <li class="nav-item ">
+
+                    <button id="nav-btn-login" type="button" class="btn btn-info" href="#" onclick="abreLogin(this,`login`)">LOGINX</button>
+
+
+                </li>
+            </ul>
+        </div>
+        <!--//LOGOUT-->
+
+</header>
+<main>
+    <div class="container">
+        <section id='home'>
+            <h2>Bem-vindo ao mundo TOMB RAIDER</h2><ul><li>Participe de fóruns, crie topicos e envie posts</li><li>Confira os Tópicos mais acessados</li><li>Veja a contagem de Posts por Tópicos</li><li>E muito mais...</li></ul></section>
+        <script>
+
+            function mudaSecao(thisNav, thisSec) {
+                $('.active')[0].className = 'nav-link';
+                thisNav.className = 'nav-link active';
+                if(thisSec == 'principal' || thisSec == 'admin') {
+                    $('section').load('controllers/' + thisSec + '.php');
+                }
+                else{
+                    $('section').load('controllers/secao.php?secaoOrdem=' + thisSec);
+                }
+            };
+
+            function abreLogin(thisNav, thisSec) {
+                $('.active')[0].className = 'nav-link';
+                $('#auxLogin')[0].className = 'nav-link active';
+                $('section').load('controllers/' + thisSec + '.php');
+
+            };
+
+            function logout() {
+                // $('#nav-btn-logout').hide();
+
+                $(document).ready(function () {
+
+                    $('section').load('controllers/logout.php');
+                    alert("Sessão encerrada");
+                    location.reload();
+
+                });
+            };
+
+            function atualizaPrincipal() {
+                //location.assign("index.php");
+                location.reload();
+
+            };
+
+            function voltarMesmaSecao(secao) {
+                $('section').load('controllers/'+ secao +'.php');
+            };
+
+            function abreSecao(secaoOrdem) {
+                $('section').load('controllers/secao.php?secaoOrdem=' + secaoOrdem);
+            };
+
+            function abreForum(id_secao, id_forum) {
+                $('section').load('controllers/forum.php?id_secao=' + id_secao + '&id_forum=' + id_forum);
+            };
+
+            function abreTopico(id_forum, id_topico) {
+                $('section').load('controllers/topico.php?id_forum=' + id_forum + '&id_topico=' + id_topico);
+            };
+
+            function abrePost(id_topico, id_post) {
+                $('section').load('controllers/post.php?id_topico=' + id_topico + '&id_post=' + id_post);
+            };
+
+            function acaoPublicar(table, crud){
+                $('section').load('controllers/admin_create_update.php?table='+ table +'&crud=' + crud);
+            };
+
+            function abreUsuarioRegistrar(){
+                $('section').load('controllers/login.php?acao=registrar');
+            };
+
+
+
+
+        </script>
+
+    </div>
+</main>
+</body>
+<footer class="footer bg-dark ">
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">
+        <span class="text-muted">&copy; Rodrigo Palermo</span>
+    </div>
+
+</footer>
+
+
+</html>

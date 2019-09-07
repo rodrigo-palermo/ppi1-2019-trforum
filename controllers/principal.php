@@ -99,10 +99,10 @@ print "</section>";
 </script>
 
 <?php
-//DEBUG
-print '<hr><br><p>DEBUG</p>';
-if (isset($_SESSION['autenticado'])) {
-    print '<pre>'.var_export($_SESSION, true).'</pre>';
-}
+////DEBUG
+//print '<hr><br><p>DEBUG</p>';
+//if (isset($_SESSION['autenticado'])) {
+//    print '<pre>'.var_export($_SESSION, true).'</pre>';
+//}
 
 

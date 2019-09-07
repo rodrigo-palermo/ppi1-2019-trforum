@@ -4,7 +4,7 @@ require_once __DIR__ . '/../headLinkClasses.php';
 
 if(isset($_GET['secaoOrdem'])) {
 
-    $secao = Secao::findByOrder($_GET['secaoOrdem']);
+    $secao = SecaoDAO::findByOrder($_GET['secaoOrdem']);
 
     $_SESSION['id_secao'] = $secao->getId();
     $_SESSION['secaoOrdem'] = $_GET['secaoOrdem'];  //para botões VOLTAR
@@ -24,7 +24,7 @@ if(isset($_GET['secaoOrdem'])) {
 
             ?>
             <div class="media border p-3">
-                <img src="img/<?= $objeto->getImagem()?>" alt="Forum" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+                <img src="img/<?= $objeto->getImagem()?>" alt="Imagem do Forum" class="mr-3 mt-3 rounded-circle" style="width:60px;">
                 <div class="media-body">
                     <a class="nav-link" href="#" onclick="abreForum('<?=$objeto->getIdSecao()?>','<?=$objeto->getId()?>')"><h4><?php print $objeto->getNome();?>
                     </h4></a>

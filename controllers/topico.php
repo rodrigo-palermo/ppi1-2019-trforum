@@ -17,7 +17,9 @@ if(isset($_GET['id_forum']) && isset($_GET['id_topico'])) {
     ?>
     <div class="media border p-3">
         <div class="media-body">
-            <img src="../img/admin.png" alt="Topico" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+            <img src="img/<?= Usuario::findById($topico->getIdUsuario())->getImagem()?>" alt="Avatar do Usuario que criou o Topico." class="mr-3 mt-3 rounded-circle" style="width:60px;">
+            <p class="p-sub"><?= Usuario::findById($topico->getIdUsuario())->getNome()?> abriu este tópico em <?= $topico->getDataHora()?>
+                <br>Membro desde: <?= Usuario::findById($topico->getIdUsuario())->getDataInscricao()?></p>
             <a class="nav-link" href="#" onclick="abreTopico('<?=$topico->getIdForum()?>','<?=$topico->getId()?>')"><h4><?php print $topico->getNome();?>
                 </h4></a>
             <p><?php print $topico->getDescricao();?></p>
@@ -34,19 +36,20 @@ if(isset($_GET['id_forum']) && isset($_GET['id_topico'])) {
 
             ?>
             <div class="media border p-3">
-                <div class="media-body">
-                    <img src="img/admin.png" alt="Post" class="mr-3 mt-3 rounded-circle" style="width:60px;">
 
-                    <a class="nav-link" href="#" /*onclick="abrePost('< ?=$objeto->getIdTopico()?>','< ?=$objeto->getId()?>'*/)"><h4><?php print $objeto->getNome();?>
-                        </h4></a>
+                <img src="img/<?= Usuario::findById($objeto->getIdUsuario())->getImagem()?>" alt="Avatar do Usuario que criou o Post." class="mr-3 mt-3 rounded-circle" style="width:60px;">
+
+                <div class="media-body">
+                    <sub>Membro desde: <?= Usuario::findById($objeto->getIdUsuario())->getDataInscricao()?></sub>
+                    <a class="nav-link" href="#" /*onclick="abrePost('< ?=$objeto->getIdTopico()?>','< ?=$objeto->getId()?>'*/)">
+                    <h5><?=Usuario::findById($objeto->getIdUsuario())->getNome();?><small><i> comentou em <?= $objeto->getDataHora()?> </i></small>
+                    </h5></a>
+                    <p class="p-sub">
+
                     <p><?=nl2br($objeto->getDescricao())?></p>
                 </div>
             </div>
             <?php
-        }
-
-        if(isset($_SESSION['autenticado']) && $_SESSION['autenticado'] == true) {
-            print "<button type='button' class='btn btn-outline-primary' onclick='acaoPublicar(`post`, `criar`)'>+</button><br><br>";
         }
     }
     else {
@@ -54,6 +57,10 @@ if(isset($_GET['id_forum']) && isset($_GET['id_topico'])) {
         if (isset($_SESSION['autenticado']) && $_SESSION['autenticado'] == false) {
             print "<p>Faça login ou abra uma conta gratuita para entrar na discussão</p>";
         }
+    }
+
+    if(isset($_SESSION['autenticado']) && $_SESSION['autenticado'] == true) {
+        print "<button type='button' class='btn btn-outline-primary' onclick='acaoPublicar(`post`, `criar`)'>+</button><br><br>";
     }
 }
 else {

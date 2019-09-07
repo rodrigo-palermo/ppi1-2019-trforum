@@ -28,6 +28,9 @@ if(isset($_GET['id_secao']) && isset($_GET['id_forum'])) {
             ?>
             <div class="media border p-3">
                 <div class="media-body">
+                    <img src="img/<?= Usuario::findById($objeto->getIdUsuario())->getImagem()?>" alt="Avatar do Usuario que criou o Topico." class="mr-3 mt-3 rounded-circle" style="width:60px;">
+                    <p class="p-sub"><?= Usuario::findById($objeto->getIdUsuario())->getNome()?> abriu este tópico em <?= $objeto->getDataHora()?>
+                    <br>Membro desde: <?= Usuario::findById($objeto->getIdUsuario())->getDataInscricao()?></p>
                     <a class="nav-link" href="#" onclick="abreTopico('<?=$objeto->getIdForum()?>','<?=$objeto->getId()?>')"><h4><?php print $objeto->getNome();?>
                         </h4></a>
                     <p><?php print $objeto->getDescricao();?></p>

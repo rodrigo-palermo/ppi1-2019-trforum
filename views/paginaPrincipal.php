@@ -1,7 +1,7 @@
 <?php
 
-print "<h2>Carrega secao compacta de Jogos e de Filmes para a primeira pagina</h2>";
-print "<ul><li>Resumo de foruns, topicos, contagem de posts e respostas</li>";
-print "<li>Topicos</li>";
-print "<li>Contagem</li>";
-print "<li>Respostas</li></ul>";
+print "<h2>Bem-vindo ao mundo TOMB RAIDER</h2>";
+print "<ul><li>Participe de fóruns, crie topicos e envie posts</li>";
+print "<li>Confira os Tópicos mais acessados</li>";
+print "<li>Veja a contagem de Posts por Tópicos</li>";
+print "<li>E muito mais...</li></ul>";
